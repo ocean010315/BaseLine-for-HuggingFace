@@ -38,4 +38,5 @@ class STSDataset(Dataset):
     def __getitem__(self, idx):
         if len(self.labels)==0: # test dataset에는 label이 주어지지 않음
             return torch.tensor(self.inputs[idx])
-        return torch.tensor(self.inputs[idx]), torch.tensor(self.labels[idx])
+        return {"input_ids": torch.tensor(self.inputs[idx]), 
+                "labels": torch.tensor(self.labels[idx])}
