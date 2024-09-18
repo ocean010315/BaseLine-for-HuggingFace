@@ -18,7 +18,7 @@ def preprocess(task, data_path, model_name): # task: "train", "valid", "test"
     inputs = []
     for _, sentence in tqdm(raw_data.iterrows(), desc='tokenization', total=len(raw_data)):
         sequence = '[SEP]'.join([sentence.iloc[0], sentence.iloc[1]])
-        tokens = tokenizer(sequence)
+        tokens = tokenizer(sequence, add_special_tokens=True, padding='max_length', truncation=True)
         inputs.append(tokens['input_ids'])
     
     dataset = STSDataset(inputs, labels)
