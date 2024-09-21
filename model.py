@@ -1,16 +1,13 @@
 import numpy as np
 from scipy.stats import pearsonr
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, DataCollator
-from torch import optim
-import torch
-from pandas import read_csv
-
-from dataset import preprocess
+from transformers import AutoModelForSequenceClassification, TrainingArguments, Trainer
 
 
 class Model():
     def __init__(self, model_name, epoch, train_data, valid_data, batch_size, lr, weight_decay):
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=1)
+        self.model_name = model_name
+
+        self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name, num_labels=1)
     
         self.training_arguments = TrainingArguments(
             output_dir='./results/',
@@ -23,9 +20,6 @@ class Model():
             per_device_eval_batch_size=batch_size,
             lr_scheduler_type='linear', # linear, cosine, constant, etc.
         )
-
-        # optimizer = optim.AdamW(self.model.parameters(), lr=lr, weight_decay=weight_decay)
-        # scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.1)
 
         self.trainer = Trainer(
             model=self.model,
@@ -48,13 +42,3 @@ class Model():
 
     def train(self):
         self.trainer.train()
-
-        test_data = preprocess(task="test", data_path='../../test.csv', model_name='klue/roberta-small')
-        
-        predictions = self.trainer.predict(test_data)
-        print(predictions)
-        # logits = [round(float(i), 1) for i in torch.cat(logits)]
-
-        # output_csv = read_csv('../../sample_submission.csv')
-        # output_csv['target'] = logits
-        # output_csv.to_csv('sample_output_v1.csv', index=False)
