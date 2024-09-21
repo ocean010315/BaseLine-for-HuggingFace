@@ -4,13 +4,13 @@ from transformers import AutoModelForSequenceClassification, TrainingArguments, 
 
 
 class Model():
-    def __init__(self, model_name, epoch, train_data, valid_data, batch_size, lr, weight_decay):
+    def __init__(self, model_name, output_dir, epoch, train_data, valid_data, batch_size, lr, weight_decay):
         self.model_name = model_name
 
         self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name, num_labels=1)
     
         self.training_arguments = TrainingArguments(
-            output_dir='./results/',
+            output_dir=output_dir,
             overwrite_output_dir=True,
             num_train_epochs=epoch,
             learning_rate=lr,

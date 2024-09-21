@@ -16,6 +16,7 @@ if __name__ == "__main__":
     valid_dataset = preprocess(task="valid", data_path=config.valid_path, model_name=config.model)
 
     model = Model(model_name=config.model,
+                  output_dir=config.output_dir,
                   epoch=config.epoch,
                   train_data=train_dataset,
                   valid_data=valid_dataset,
