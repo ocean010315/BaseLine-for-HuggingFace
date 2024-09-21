@@ -9,7 +9,7 @@ def preprocess(task, data_path, model_name): # task: "train", "valid", "test"
     data_df = pandas.read_csv(data_path)
     raw_data = data_df[['sentence_1', 'sentence_2']]
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, max_length=160)
 
     labels = []
     if task=="train" or task=="valid":
