@@ -14,13 +14,12 @@ if __name__ == "__main__":
 
     train_dataset = preprocess(task="train", data_path=config.train_path, model_name=config.model)
     valid_dataset = preprocess(task="valid", data_path=config.valid_path, model_name=config.model)
-    # train_dataloader = DataLoader(train_dataset, batch_size=config.batch_size, shuffle=True)
-    # valid_dataloader = DataLoader(valid_dataset, batch_size=config.batch_size, shuffle=False)
 
     model = Model(model_name=config.model,
                   epoch=config.epoch,
                   train_data=train_dataset,
                   valid_data=valid_dataset,
+                  batch_size=config.batch_size,
                   lr=float(config.lr),
                   weight_decay=config.weight_decay)
     model.train()
