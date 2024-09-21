@@ -1,5 +1,5 @@
 # custom
-tmp.ipynb
+*.ipynb
 *.csv
 *.yaml
 
