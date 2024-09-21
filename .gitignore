@@ -1,7 +1,8 @@
 # custom
-tmp.ipynb
+*.ipynb
 *.csv
 *.yaml
+results/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -12,15 +12,15 @@ if __name__ == "__main__":
 
     config = configurer(arg.config)
 
-    train_dataset = preprocess(config.train_path)
-    valid_dataset = preprocess(config.valid_path)
-    train_dataloader = DataLoader(train_dataset, batch_size=config.batch_size, shuffle=True)
-    valid_dataloader = DataLoader(valid_dataset, batch_size=config.batch_size, shuffle=False)
+    train_dataset = preprocess(task="train", data_path=config.train_path, model_name=config.model)
+    valid_dataset = preprocess(task="valid", data_path=config.valid_path, model_name=config.model)
+    # train_dataloader = DataLoader(train_dataset, batch_size=config.batch_size, shuffle=True)
+    # valid_dataloader = DataLoader(valid_dataset, batch_size=config.batch_size, shuffle=False)
 
-    model = Model(model_name=config.model_name,
+    model = Model(model_name=config.model,
                   epoch=config.epoch,
-                  train_data=train_dataloader,
-                  valid_data=valid_dataloader,
-                  lr=config.lr,
+                  train_data=train_dataset,
+                  valid_data=valid_dataset,
+                  lr=float(config.lr),
                   weight_decay=config.weight_decay)
     model.train()
