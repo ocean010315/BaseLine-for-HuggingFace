@@ -21,6 +21,7 @@ if __name__ == "__main__":
                   train_data=train_dataset,
                   valid_data=valid_dataset,
                   batch_size=config.batch_size,
-                  lr=float(config.lr),
+                  lr=float(config.lr_init),
+                  lr_scheduler=config.lr_scheduler,
                   weight_decay=config.weight_decay)
     model.train()
