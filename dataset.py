@@ -34,20 +34,31 @@ def preprocess(task, data_path, model_name): # task: "train", "valid", "test"
 
 class STSDataset(Dataset):
     def __init__(self, inputs, labels):
-        super(STSDataset).__init__()
+        super(STSDataset, self).__init__()
         self.inputs = inputs
         self.labels = labels
     
     def __len__(self):
-        return len(self.inputs) # test dataset에는 label이 주어지지 않음
+        return len(self.inputs['input_ids'])
     
     def __getitem__(self, idx):
-        if len(self.labels)==0: # test dataset에는 label이 주어지지 않음
-            return {"input_ids": torch.tensor(self.inputs["input_ids"][idx]),
-                    "token_type_ids": torch.tensor(self.inputs["token_type_ids"][idx]),
-                    "attention_mask": torch.tensor(self.inputs["attention_mask"][idx])}
+        # if len(self.labels)==0: # test dataset에는 label이 주어지지 않음
+        #     return {"input_ids": torch.tensor(self.inputs["input_ids"][idx]),
+        #             "token_type_ids": torch.tensor(self.inputs["token_type_ids"][idx]),
+        #             "attention_mask": torch.tensor(self.inputs["attention_mask"][idx])}
         
-        return {"input_ids": torch.tensor(self.inputs["input_ids"][idx]),
-                "token_type_ids": torch.tensor(self.inputs["token_type_ids"][idx]),
-                "attention_mask": torch.tensor(self.inputs["attention_mask"][idx]),
-                "labels": torch.tensor(self.labels[idx])}
+        # return {"input_ids": torch.tensor(self.inputs["input_ids"][idx]),
+        #         "token_type_ids": torch.tensor(self.inputs["token_type_ids"][idx]),
+        #         "attention_mask": torch.tensor(self.inputs["attention_mask"][idx]),
+        #         "labels": torch.tensor(self.labels[idx])}
+
+        item = {
+            "input_ids": torch.tensor(self.inputs["input_ids"][idx]),
+            "token_type_ids": torch.tensor(self.inputs["token_type_ids"][idx]),
+            "attention_mask": torch.tensor(self.inputs["attention_mask"][idx])
+        }
+
+        if self.labels is not None:
+            item["labels"] = torch.tensor(self.labels[idx])
+        
+        return item
