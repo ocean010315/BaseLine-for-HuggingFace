@@ -1,0 +1,9 @@
+output_dir: ./result/
+train_path: ./train.csv
+valid_path: ./dev.csv
+batch_size: 16
+model: klue/roberta-small
+epoch: 1
+lr_init: 5e-5
+lr_scheduler: linear
+weight_decay: 0.0001
